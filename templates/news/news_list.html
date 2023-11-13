@@ -1,0 +1,36 @@
+{% extends 'default.html' %}
+
+{% block content %}
+    <h2>News List</h2>
+    <ul>
+        {% for article in news_list %}
+            <li>
+                <a href="{% url 'news_detail' article.pk%}">
+                    {{ article.pk }}
+                </a>
+                <p>{{ article.censored_title }} - {{ article.pub_date|date:"d.m.Y" }}</p>
+                <p>{{ article.censored_text|slice:":20" }}...</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if news_list.has_other_pages %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if news_list.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ news_list.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ news_list.number }} of {{ news_list.paginator.num_pages }}.
+                </span>
+
+                {% if news_list.has_next %}
+                    <a href="?page={{ news_list.next_page_number }}">next</a>
+                    <a href="?page={{ news_list.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

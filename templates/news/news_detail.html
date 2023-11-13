@@ -1,0 +1,7 @@
+{% extends 'default.html' %}
+
+{% block content %}
+    <h2>{{ news.censored_title }}</h2>
+    <p>{{ news.pub_date|date:"d.m.Y" }}</p>
+    <p>{{ news.censored_text }}</p>
+{% endblock %}
